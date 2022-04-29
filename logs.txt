@@ -1,0 +1,106 @@
+1:
+
+data = 21000000
+
+// data_with_len_and_op_equal 
+script = 042100000087
+hashed_script = 61adb1f9b68cdbf4224d8b6a1b3d0b6266b7d291
+
+// How to get to hashed script
+TERMINAL
+--------------------
+>>> import hashlib
+>>> x = hashlib.sha256(bytes.fromhex("042100000087")).digest()
+>>> h = hashlib.new("ripemd160")
+>>> h.update(x)
+>>> h.hexdigest()
+'61adb1f9b68cdbf4224d8b6a1b3d0b6266b7d291'
+>>> 
+----------------------
+
+FORMAT:
+_____________
+scriptPubKey: <ophash160>, len(hashed_script), hashed_script, <opequal>
+
+scriptSig: len(scriptSig), len(data), data, len(unhashed_original_script), unhashed_original_script
+_____________
+
+2:
+scriptPubKey = a9 14 61adb1f9b68cdbf4224d8b6a1b3d0b6266b7d291 87
+
+3:
+scriptSig = 0d 04 21000000 06 042100000087
+
+4:
+
+CONSOLE
+----------------
+decodescript a91461adb1f9b68cdbf4224d8b6a1b3d0b6266b7d29187
+
+{
+  "asm": "OP_HASH160 61adb1f9b68cdbf4224d8b6a1b3d0b6266b7d291 OP_EQUAL",
+  "address": "2N29hcSs3Jr2TZ1TaGRnMe9epSUZPKXhzPV",
+  "type": "scripthash"
+}
+-----------------
+
+P2SH scriptPubKey encoded as a base58 testnet address:
+2N29hcSs3Jr2TZ1TaGRnMe9epSUZPKXhzPV
+
+5:
+41428949a2a9e9b88b4b2970e3ac029b268598b074dee934e38f8810f9b67b37
+
+6:
+440ae9e40b40faa1908bfe45c382bbd0621da53f707f3aa940d313ab0f2bd49a
+
+7:
+
+CONSOLE
+----------------
+createrawtransaction '[{"txid": "bfaa9698e804b109ffbf652b572ad7a85eadb2232a1ac10e9a641387540bdb8f", "vout": 1}]' '[{"2N29hcSs3Jr2TZ1TaGRnMe9epSUZPKXhzPV": 0.0001}]'
+
+02000000018fdb0b548713649a0ec11a2a23b2ad5ea8d72a572b65bfff09b104e89896aabf0100000000ffffffff01102700000000000017a91461adb1f9b68cdbf4224d8b6a1b3d0b6266b7d2918700000000
+----------------
+
+
+8:
+02000000
+01
+377bb6f910888fe334e9de74b09885269b02ace370294b8bb8e9a9a249894241
+00000000
+00
+ffffffff
+01
+2823000000000000
+160014693e1e0dfe2febf70a8ef0f7670045b6669a84f9
+00000000
+
+
+9:
+
+CONSOLE
+----------------
+signrawtransactionwithwallet 02000000018fdb0b548713649a0ec11a2a23b2ad5ea8d72a572b65bfff09b104e89896aabf0100000000ffffffff01102700000000000017a91461adb1f9b68cdbf4224d8b6a1b3d0b6266b7d2918700000000
+
+{
+  "hex": "020000000001018fdb0b548713649a0ec11a2a23b2ad5ea8d72a572b65bfff09b104e89896aabf0100000000ffffffff01102700000000000017a91461adb1f9b68cdbf4224d8b6a1b3d0b6266b7d29187024730440220483006a51cfa6428b31e46b0c1c8f943af8caa9e65ab01372dd470ab41d42a83022024f88719d5f9028d2ac674c1b2b5d03182d9002339ca43908b6433193b16a9ca0121021564ebfd70daacd85bb9cdf528a72a26221da008c659846e7486bb0ea427ac5700000000",
+  "complete": true
+}
+------------------
+
+
+10:
+
+02000000
+01
+377bb6f910888fe334e9de74b09885269b02ace370294b8bb8e9a9a249894241
+00000000
+0c 04 21000000 06 042100000087
+ffffffff
+01
+2823000000000000
+160014693e1e0dfe2febf70a8ef0f7670045b6669a84f9
+00000000
+
+
+0200000001377bb6f910888fe334e9de74b09885269b02ace370294b8bb8e9a9a249894241000000000c042100000006042100000087ffffffff012823000000000000160014693e1e0dfe2febf70a8ef0f7670045b6669a84f900000000
